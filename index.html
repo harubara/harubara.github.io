@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Chat App</title>
+    <link rel="stylesheet" type="text/css" href="profile.css">
+</head>
+
+<body>
+
+    <div id="chat-app">
+        <div class="chat-container">
+            <div class="messages">
+                <div v-for="message in messages" :key="message.id" class="message">
+                    {{ message.text }}
+                </div>
+            </div>
+            <form @submit.prevent="sendMessage">
+                <input v-model="newMessage" type="text" placeholder="メッセージを入力">
+                <button type="submit">送信</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vue.js のスクリプトを読み込む -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <script>
+        new Vue({
+            el: '#chat-app',
+            data: {
+                newMessage: '',
+                messages: [
+                    { id: 1, text: "hello" },
+                    { id: 2, text: "world" },],
+                nextId: 3
+            },
+            methods: {
+                sendMessage() {
+                    if (this.newMessage.trim() !== '') {
+                        this.messages.push({ id: this.nextId++, text: this.newMessage });
+                        this.newMessage = '';
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
